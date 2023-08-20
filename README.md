@@ -1,2 +1,1 @@
-# strava-in-rust
-strava in rust app
+# Basic Rust API to get me started
