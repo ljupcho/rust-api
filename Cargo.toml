@@ -1,0 +1,45 @@
+[package]
+name = "strava-in-rust"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [".", "entity", "migration"]
+
+[dependencies]
+entity = { path = "entity" }
+migration = { path = "migration" }
+sqlx = { version = "0.5", features = ["runtime-tokio-rustls", "postgres"] }
+axum = { version = "0.6.7", features = ["tower-log"] }
+tokio = { version = "1.17.0", features = ["full"] }
+futures = { version = "0.3", features = ["async-await"] }
+clap = "3"
+dotenv = "0.15.0"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+anyhow = "1"
+serde = { version = "1.0.136", features = ["derive"] }
+validator = { version = "0.15", features = ["derive"] }
+async-trait = "0.1"
+http = "0.2"
+http-body = "0.4.3"
+serde_json = "1.0.81"
+thiserror = "1"
+lazy_static = "1.4"
+hyper = { version = "0.14.24", features = ["client"] }
+utoipa = { version = "3.0.3", features = ["axum_extras", "chrono", "uuid"] }
+axum-macros = "0.3.4"
+time = "0.3"
+chrono = "0.4"
+mockall = "0.11.1"
+metrics = "0.18"
+metrics-exporter-prometheus = "0.8"
+
+# tower crates for HTTP middleware
+tower = { version = "0.4", features = ["timeout"] }
+tower-http = { version = "0.3", features = ["trace", "cors"] }
+
+sea-orm = { version = "0.11.0", features = [ "debug-print", "sqlx-postgres", "runtime-tokio-native-tls", "macros" ] }
+
