@@ -1,5 +1,5 @@
 [package]
-name = "strava-in-rust"
+name = "rust-api"
 version = "0.1.0"
 edition = "2021"
 
@@ -36,6 +36,7 @@ chrono = "0.4"
 mockall = "0.11.1"
 metrics = "0.18"
 metrics-exporter-prometheus = "0.8"
+env_logger = "0.10"
 
 # tower crates for HTTP middleware
 tower = { version = "0.4", features = ["timeout"] }

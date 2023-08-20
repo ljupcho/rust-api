@@ -1,19 +1,18 @@
 use anyhow::Result;
-use strava_in_rust::{handlers, AppState};
+use rust_api::{handlers, AppState};
 use axum::{routing::get, Router};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let db = strava_in_rust::shared::db::DB::connect().await?;
-
+    let db = rust_api::shared::db::DB::connect().await?;
     // let store_posts = PostStore::new(&db);
     // let srv_posts = PostService::new(&store_posts.clone());
     // let store_posts = Arc::new(Mutex::new(PostStore::new(&db)));
     // let srv_posts = PostService::new(store_posts);
     
     // let router_posts = Router::new()
-    //         .route("/posts", get(strava_in_rust::handlers::posts::get_posts))
-    //         .route("/posts/:id", get(strava_in_rust::handlers::posts::get_post))
+    //         .route("/posts", get(rust_api::handlers::posts::get_posts))
+    //         .route("/posts/:id", get(rust_api::handlers::posts::get_post))
     //         .with_state(srv_posts);
     //
     // let router = Router::new()
