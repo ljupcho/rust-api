@@ -8,7 +8,7 @@ impl DB {
     pub async fn connect() -> Result<DatabaseConnection, anyhow::Error> {
         let mut opt: ConnectOptions = ConnectOptions::new("postgres://shop:shop@localhost:5483/testrust".to_string());
         opt.max_connections(100)
-            .min_connections(5)
+            .min_connections(25)
             .connect_timeout(Duration::from_secs(8))
             .idle_timeout(Duration::from_secs(8))
             .max_lifetime(Duration::from_secs(8))

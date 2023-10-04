@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - configmaps/deployments-conf.yaml
+  - deployments/api/base.yaml
+  - deployments/db/base.yaml
+patches:
+  - path: deployments/api/extras-deployment.yaml
+  - path: deployments/db/extras-deployment.yaml

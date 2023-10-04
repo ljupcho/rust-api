@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deployments-conf
+data:
+  ENVIRONMENT: production
+  # application url
+  APP_URL: "https://rust-api.com"
+  APP_DEBUG: "0"
+  APP_PORT: "9000"
+  ACCESS_LOG: "0"
+  ERROR_LOG: "0"
+  INFO_LOG: "0"
+  # postgres database credentials
+  DB_HOST: "db"
+  DB_USER: "postgres"
+  DB_PASSWORD: "postgres"
+  DB_NAME: "postgres"
+  DB_PORT: "5432"

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/cors-allow-headers:
+      Authorization, X-Requested-With,
+      Content-Type, Accept
+    nginx.ingress.kubernetes.io/cors-allow-methods:
+      GET, POST, PUT, PATCH, DELETE,
+      HEAD, OPTIONS
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.org/client-max-body-size: 50m
+    kubernetes.io/ingress.class: nginx
+  #   nginx.ingress.kubernetes.io/enable-access-log: "false"
+  name: ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: marketplaza.test
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 8080

@@ -1,0 +1,186 @@
+apiVersion: v1
+data:
+  ACCESS_LOG: "0"
+  APP_DEBUG: "0"
+  APP_PORT: "9000"
+  APP_URL: http://rest-api.test
+  DB_HOST: rust-db
+  DB_NAME: postgres
+  DB_PASSWORD: postgres
+  DB_PORT: "5432"
+  DB_USER: postgres
+  ENVIRONMENT: dev
+  ERROR_LOG: "0"
+  INFO_LOG: "0"
+kind: ConfigMap
+metadata:
+  name: deployments-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rust-api
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    app: rust-api
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rust-db
+spec:
+  ports:
+  - name: tcp
+    port: 5432
+    targetPort: 5432
+  selector:
+    app: rust-db
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rust-api
+  name: rust-api-deployment
+spec:
+  minReadySeconds: 5
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: rust-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: rust-api
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        envFrom:
+        - configMapRef:
+            name: deployments-conf
+        image: ghcr.io/ljupcho/rust-api:latest
+        imagePullPolicy: Always
+        name: rust-api
+        ports:
+        - containerPort: 9000
+          name: api
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 230m
+            memory: 250Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      imagePullSecrets:
+      - name: gh-regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rust-db
+  name: rust-db-deployment
+spec:
+  minReadySeconds: 5
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: rust-db
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: rust-db
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        envFrom:
+        - configMapRef:
+            name: deployments-conf
+        image: postgres:latest
+        imagePullPolicy: IfNotPresent
+        name: postgres
+        ports:
+        - containerPort: 5432
+          name: rust-db
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 530m
+            memory: 550Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: rust-db-data
+      volumes:
+      - emptyDir: {}
+        name: rust-db-data
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rust-api-deployment-hpa
+spec:
+  behavior:
+    scaleDown:
+      policies:
+      - periodSeconds: 120
+        type: Pods
+        value: 1
+      stabilizationWindowSeconds: 300
+    scaleUp:
+      policies:
+      - periodSeconds: 60
+        type: Pods
+        value: 3
+      stabilizationWindowSeconds: 30
+  maxReplicas: 5
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageValue: 104m
+        type: AverageValue
+    type: Resource
+  - resource:
+      name: memory
+      target:
+        averageValue: 90Mi
+        type: AverageValue
+    type: Resource
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-deployment

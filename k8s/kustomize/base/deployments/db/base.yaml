@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rust-db
+  name: rust-db-deployment
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  progressDeadlineSeconds: 600
+  selector:
+    matchLabels:
+      app: rust-db
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: rust-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent
+          terminationMessagePath: "/dev/termination-log"
+          terminationMessagePolicy: File
+          ports:
+            - containerPort: 5432
+              name: rust-db
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: rust-db-data
+      volumes:
+        - name: rust-db-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rust-db
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: rust-db

@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rust-db
+  name: rust-db-deployment
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        app: rust-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          envFrom:
+            - configMapRef:
+                name: deployments-conf
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 530m
+              memory: 550Mi

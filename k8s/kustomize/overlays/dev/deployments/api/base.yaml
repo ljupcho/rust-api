@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rust-api
+  name: rust-api-deployment
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        app: rust-api
+    spec:
+      containers:
+        - name: rust-api
+          image: ghcr.io/ljupcho/rust-api:latest
+          envFrom:
+            - configMapRef:
+                name: deployments-conf
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 230m
+              memory: 250Mi
+      imagePullSecrets:
+        - name: gh-regcred

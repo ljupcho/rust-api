@@ -1,6 +1,5 @@
 use anyhow::Result;
-use rust_api::{handlers, AppState};
-use axum::{routing::get, Router};
+use rust_api::AppRouter;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -19,16 +18,16 @@ async fn main() -> Result<()> {
     //         .nest("/api", router_posts);
     
     // Build app state
-    let state = AppState {
-        database: db,
-    };
+    // let state = AppState {
+    //     database: db,
+    // };
 
-    // let router = AppRouter::build(db);
+    let router = AppRouter::build(db);
 
-    let router = Router::new()
-        .route("/api/postsnew/:id", get(handlers::posts::get_post_new)) 
-        .with_state(state)
-    ;
+    // let router = Router::new()
+    //     .route("/api/postsnew/:id", get(handlers::posts::get_post_new)) 
+    //     .with_state(state)
+    // ;
 
     // Run our application as a hyper server on http://localhost:9900.
     axum::Server::bind(&"0.0.0.0:9900".parse().unwrap())
