@@ -1,5 +1,6 @@
 # Use a minimal Rust image as the base image
-FROM rust:latest as builder
+# FROM rust:latest as builder
+FROM rust:bookworm as builder
 
 # Create a new directory for your Rust application
 WORKDIR /app
@@ -22,8 +23,12 @@ COPY ./entity/src/ ./entity/src/
 RUN cargo build --release
 
 # Start a new stage for the final image
-FROM debian:buster-slim
+# FROM debian:buster-slim
 # FROM alpine:latest
+# FROM debian:bullseye-slim
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt install -y openssl
 
 WORKDIR /app
 # Set environment variables, if needed
@@ -34,7 +39,7 @@ USER root
 COPY --from=builder /app/target/release/rustapi /app/rustapi
 
 # Expose any necessary ports
-EXPOSE 9000 
+EXPOSE 9900 
 
 # Define the command to run your Rust application
 CMD ["/app/rustapi"]
