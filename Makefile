@@ -34,3 +34,5 @@ migrate: # Run database migrations
 build-image-api: ## Build the image for api to be used in k8s.
 	docker build -t rust-api:latest . -f ./docker/api/Dockerfile
 
+build-image-migration: ## Build the image for migration to be used in k8s.
+	docker build -t rust-migration:latest . -f ./docker/migration/Dockerfile

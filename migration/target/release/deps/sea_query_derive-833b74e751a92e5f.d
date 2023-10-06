@@ -1,0 +1,9 @@
+/Users/ljupcho/Projects/rust-api/migration/target/release/deps/libsea_query_derive-833b74e751a92e5f.dylib: /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/lib.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/error.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_attr.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_path.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_variant.rs
+
+/Users/ljupcho/Projects/rust-api/migration/target/release/deps/sea_query_derive-833b74e751a92e5f.d: /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/lib.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/error.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_attr.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_path.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_variant.rs
+
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/lib.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/error.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_attr.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_path.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-derive-0.4.0/src/iden_variant.rs:

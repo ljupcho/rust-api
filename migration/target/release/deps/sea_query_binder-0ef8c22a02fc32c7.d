@@ -1,0 +1,10 @@
+/Users/ljupcho/Projects/rust-api/migration/target/release/deps/sea_query_binder-0ef8c22a02fc32c7.rmeta: /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/lib.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx_postgres.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/values.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx.rs
+
+/Users/ljupcho/Projects/rust-api/migration/target/release/deps/libsea_query_binder-0ef8c22a02fc32c7.rlib: /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/lib.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx_postgres.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/values.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx.rs
+
+/Users/ljupcho/Projects/rust-api/migration/target/release/deps/sea_query_binder-0ef8c22a02fc32c7.d: /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/lib.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx_postgres.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/values.rs /Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx.rs
+
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/lib.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx_postgres.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/values.rs:
+/Users/ljupcho/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sea-query-binder-0.5.0/src/sqlx.rs:
