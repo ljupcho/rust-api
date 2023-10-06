@@ -1,1 +1,0 @@
-/Users/ljupcho/Projects/rust-api/migration/target/release/libmigration.rlib: /Users/ljupcho/Projects/rust-api/migration/src/lib.rs /Users/ljupcho/Projects/rust-api/migration/src/m20220101_000001_create_table.rs /Users/ljupcho/Projects/rust-api/migration/src/m20230810_192257_create_blog_table.rs
