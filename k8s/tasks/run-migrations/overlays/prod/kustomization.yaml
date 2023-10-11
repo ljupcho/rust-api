@@ -1,0 +1,5 @@
+resources:
+- ../../base
+patches:
+- path: env.yaml 
+- path: args.yaml 

@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: task-run-rust-migration
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: deployments-conf
+          image: ghcr.io/ljupcho/rust-migration:latest
+          imagePullPolicy: Always
+          name: task-run-rust-migration
+      imagePullSecrets:
+        - name: gh-regcred
+      restartPolicy: Never

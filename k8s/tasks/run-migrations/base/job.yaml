@@ -1,0 +1,14 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: task-run-rust-migration
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+        - name: task-run-rust-migration
+          image: rust-migration:latest
+          imagePullPolicy: Always
+      restartPolicy: Never

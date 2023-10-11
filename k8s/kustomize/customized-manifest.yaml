@@ -23,9 +23,9 @@ metadata:
 spec:
   ports:
   - name: http
-    port: 8080
+    port: 8081
     protocol: TCP
-    targetPort: 9000
+    targetPort: 9900
   selector:
     app: rust-api
   type: NodePort
@@ -80,7 +80,7 @@ spec:
         imagePullPolicy: Always
         name: rust-api
         ports:
-        - containerPort: 9000
+        - containerPort: 9900
           name: api
         resources:
           limits:

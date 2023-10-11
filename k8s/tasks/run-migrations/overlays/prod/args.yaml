@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: task-run-rust-migration
+spec:
+  template:
+    spec:
+      containers:
+        - name: task-run-rust-migration
+          image: ghcr.io/ljupcho/rust-migration:latest
+      imagePullSecrets:
+        - name: gh-regcred
