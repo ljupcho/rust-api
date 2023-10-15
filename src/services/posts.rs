@@ -60,12 +60,7 @@ impl PostServiceTrait for PostService {
                 e
             })?;
 
-        Ok(
-            PublicPost{
-                id: res.id,
-                name: res.name,
-            }
-        )
+        Ok(get_public_post(res))
     }
 }
 
@@ -78,12 +73,7 @@ pub async fn get_post_by_id(db: &DatabaseConnection, id: i32) -> Result<PublicPo
                 e
             })?.unwrap();
 
-        Ok(
-            PublicPost{
-                id: res.id,
-                name: res.name,
-            }
-        )
+        Ok(get_public_post(res))
     }
 
 

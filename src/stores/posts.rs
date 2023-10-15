@@ -6,6 +6,7 @@ use sea_orm::DatabaseConnection;
 use sea_orm::{QueryOrder, PaginatorTrait};
 
 pub type DynPostStore = Arc<dyn PostStoreTrait + Send + Sync>;
+const LIMIT_PAGINATED: u64 = 20;
 
 #[async_trait]
 pub trait PostStoreTrait {
@@ -37,7 +38,7 @@ impl PostStoreTrait for PostStore {
 
         let posts = entity::post::Entity::find()
                     .order_by_desc(order)
-                    .paginate(&self.db, size.unwrap_or(u64::MAX));
+                    .paginate(&self.db, size.unwrap_or(LIMIT_PAGINATED));
 
         let data = posts.fetch_page(page.unwrap_or(0))
             .await
