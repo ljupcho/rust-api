@@ -11,7 +11,6 @@ exclude = ["migration"]
 
 [dependencies]
 entity = { path = "entity" }
-sqlx = { version = "0.5", features = ["runtime-tokio-rustls", "postgres"] }
 axum = { version = "0.6.7", features = ["tower-log"] }
 tokio = { version = "1.17.0", features = ["full"] }
 futures = { version = "0.3", features = ["async-await"] }
@@ -43,6 +42,7 @@ tower = { version = "0.4", features = ["timeout"] }
 tower-http = { version = "0.3", features = ["trace", "cors"] }
 
 sea-orm = { version = "0.11.0", features = [ "debug-print", "sqlx-postgres", "runtime-tokio-native-tls", "macros" ] }
+sqlx = { version = "0.5", features = ["runtime-tokio-rustls", "postgres", "time"] }
 
 [[bin]]
 name = "rustapi"

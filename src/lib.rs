@@ -10,11 +10,12 @@ use sea_orm::DatabaseConnection;
 use axum::{
     response::{IntoResponse, Response},
     Json, Router,
-    routing::get, Extension,
+    routing::get, Extension, handler,
 };
 use hyper::StatusCode;
-use services::posts::{PostService, DynPostService};
-use stores::posts::PostStore;
+use services::{posts::{PostService, DynPostService}, posts_sqlx::{PostSqlxService, DynPostSqlxService}};
+use sqlx::{FromRow, Pool, Postgres};
+use stores::{posts::PostStore, posts_sqlx::PostSqlxStore};
 use utoipa::{IntoParams, ToSchema};
 use core::fmt;
 use serde::{de, Serialize, Deserialize, Deserializer};
@@ -42,6 +43,7 @@ pub enum ApiError {
     RecordNotFound,
     ParamError(String),
     DatabaseError(sea_orm::DbErr),
+    DatabaseSqlxError(sqlx::Error),
     FileNotFound(String),
     IoError(std::io::Error),
     UnknownError(String),
@@ -62,11 +64,20 @@ impl From<std::io::Error> for ApiError {
         ApiError::IoError(error)
     }
 }
+impl From<sqlx::Error> for ApiError  {
+    fn from(error: sqlx::Error) -> Self {
+        ApiError::DatabaseSqlxError(error)
+    }
+}
 
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let (status_code, error_message) = match self {
             ApiError::DatabaseError(err) => (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                format!("An unexpected exception has occured: {}", err),
+            ),
+            ApiError::DatabaseSqlxError(err) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 format!("An unexpected exception has occured: {}", err),
             ),
@@ -127,28 +138,65 @@ where
     }
 }
 
+#[derive(FromRow)]
+pub struct PostModel {
+    pub id: i32,
+    pub name: String,
+    pub title: String,
+    pub text: String,
+}
+
 pub struct AppRouter; 
 
 impl AppRouter {
-    pub fn build(db: DatabaseConnection) -> Router {
+    pub fn build(db: Pool<Postgres>) -> Router {
         Router::new()
             .nest("/api", PostRouter::new_router(db))
-    }
+    } 
 }
 
+// impl AppRouter {
+//     pub fn build(db: DatabaseConnection) -> Router {
+//         Router::new()
+//             .nest("/api", PostRouter::new_router(db))
+//             .nest("/api", InitRouter::new_router())
+//     }
+// }
+//
 pub struct PostRouter;
 
 impl PostRouter {
-    pub fn new_router(db: DatabaseConnection) -> Router {
-        let store = Arc::new(PostStore::new(db));
-        let srv = Arc::new(PostService::new(store)) as DynPostService;
+    pub fn new_router(db: Pool<Postgres>) -> Router {
+        let store = Arc::new(PostSqlxStore::new(db));
+        let srv = Arc::new(PostSqlxService::new(store)) as DynPostSqlxService;
 
         Router::new()
-            .route("/posts", get(handlers::posts::get_posts))
-            .route("/posts/:id", get(handlers::posts::get_post))
-            // .with_state(srv)
+            .route("/posts/:id", get(handlers::posts::get_sqlx_post))
             .layer(Extension(srv))
     }
 }
+
+//
+// impl PostRouter {
+//     pub fn new_router(db: DatabaseConnection) -> Router {
+//         let store = Arc::new(PostStore::new(db));
+//         let srv = Arc::new(PostService::new(store)) as DynPostService;
+//
+//         Router::new()
+//             .route("/posts", get(handlers::posts::get_posts))
+//             .route("/posts/:id", get(handlers::posts::get_post))
+//             // .with_state(srv)
+//             .layer(Extension(srv))
+//     }
+// }
+//
+// pub struct InitRouter;
+//
+// impl InitRouter {
+//     pub fn new_router() -> Router {
+//         Router::new()
+//             .route("/init", get(handlers::posts::init))
+//     }
+// }
 
 
