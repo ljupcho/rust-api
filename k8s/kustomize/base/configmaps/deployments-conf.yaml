@@ -12,8 +12,8 @@ data:
   ERROR_LOG: "0"
   INFO_LOG: "0"
   # postgres database credentials
-  DB_HOST: "rust-db"
-  DB_USER: "postgres"
-  DB_PASSWORD: "postgres"
-  DB_NAME: "postgres"
-  DB_PORT: "5432"
+  DB_HOST: "postgres"
+  DB_USER: "shop"
+  DB_PASSWORD: "shop"
+  DB_NAME: "shop"
+  DB_PORT: "5483"

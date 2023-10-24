@@ -3,7 +3,8 @@ kind: Kustomization
 resources:
   - configmaps/deployments-conf.yaml
   - deployments/api/base.yaml
-  - deployments/db/base.yaml
+  # - deployments/db/base.yaml
+  - external/postgres.yaml
 patches:
   - path: deployments/api/extras-deployment.yaml
-  - path: deployments/db/extras-deployment.yaml
+  # - path: deployments/db/extras-deployment.yaml

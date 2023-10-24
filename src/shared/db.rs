@@ -19,7 +19,7 @@ impl DB {
         let connection_string = format!("postgres://{0}:{1}@{2}:{3}/{4}", user, password, host, port, db_name);
 
         let mut opt: ConnectOptions = ConnectOptions::new(connection_string.to_string());
-        opt.max_connections(100)
+        opt.max_connections(25)
             .min_connections(25)
             .connect_timeout(Duration::from_secs(8))
             .idle_timeout(Duration::from_secs(8))
@@ -41,9 +41,8 @@ impl DB {
 
         let connection_string = format!("postgres://{0}:{1}@{2}:{3}/{4}", user, password, host, port, db_name);
 
-
         let pool = PgPoolOptions::new()
-            .max_connections(100)
+            .max_connections(25)
             .min_connections(25)
             .idle_timeout(Duration::from_secs(8))
             .max_lifetime(Duration::from_secs(8))

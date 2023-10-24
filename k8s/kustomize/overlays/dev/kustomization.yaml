@@ -6,4 +6,4 @@ patches:
   - path: configmaps/deployments-conf.yaml
   - path: deployments/api/base.yaml
   - path: deployments/api/extras-deployment.yaml
-  - path: deployments/db/base.yaml
+  # - path: deployments/db/base.yaml

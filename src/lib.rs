@@ -10,12 +10,12 @@ use sea_orm::DatabaseConnection;
 use axum::{
     response::{IntoResponse, Response},
     Json, Router,
-    routing::get, Extension, handler,
+    routing::get, Extension,
 };
 use hyper::StatusCode;
-use services::{posts::{PostService, DynPostService}, posts_sqlx::{PostSqlxService, DynPostSqlxService}};
-use sqlx::{FromRow, Pool, Postgres};
-use stores::{posts::PostStore, posts_sqlx::PostSqlxStore};
+use services::posts::{PostService, DynPostService};
+use sqlx::FromRow;
+use stores::posts::PostStore;
 use utoipa::{IntoParams, ToSchema};
 use core::fmt;
 use serde::{de, Serialize, Deserialize, Deserializer};
@@ -148,55 +148,55 @@ pub struct PostModel {
 
 pub struct AppRouter; 
 
-impl AppRouter {
-    pub fn build(db: Pool<Postgres>) -> Router {
-        Router::new()
-            .nest("/api", PostRouter::new_router(db))
-    } 
-}
-
 // impl AppRouter {
-//     pub fn build(db: DatabaseConnection) -> Router {
+//     pub fn build(db: Pool<Postgres>) -> Router {
 //         Router::new()
 //             .nest("/api", PostRouter::new_router(db))
-//             .nest("/api", InitRouter::new_router())
-//     }
+//     } 
 // }
-//
+
+impl AppRouter {
+    pub fn build(db: DatabaseConnection) -> Router {
+        Router::new()
+            .nest("/api", PostRouter::new_router(db))
+            .nest("/api", InitRouter::new_router())
+    }
+}
+
 pub struct PostRouter;
 
+// impl PostRouter {
+//     pub fn new_router(db: Pool<Postgres>) -> Router {
+//         let store = Arc::new(PostSqlxStore::new(db));
+//         let srv = Arc::new(PostSqlxService::new(store)) as DynPostSqlxService;
+//
+//         Router::new()
+//             .route("/posts/:id", get(handlers::posts::get_sqlx_post))
+//             .layer(Extension(srv))
+//     }
+// }
+
+
 impl PostRouter {
-    pub fn new_router(db: Pool<Postgres>) -> Router {
-        let store = Arc::new(PostSqlxStore::new(db));
-        let srv = Arc::new(PostSqlxService::new(store)) as DynPostSqlxService;
+    pub fn new_router(db: DatabaseConnection) -> Router {
+        let store = Arc::new(PostStore::new(db));
+        let srv = Arc::new(PostService::new(store)) as DynPostService;
 
         Router::new()
-            .route("/posts/:id", get(handlers::posts::get_sqlx_post))
+            .route("/posts", get(handlers::posts::get_posts))
+            .route("/posts/:id", get(handlers::posts::get_post))
+            // .with_state(srv)
             .layer(Extension(srv))
     }
 }
 
-//
-// impl PostRouter {
-//     pub fn new_router(db: DatabaseConnection) -> Router {
-//         let store = Arc::new(PostStore::new(db));
-//         let srv = Arc::new(PostService::new(store)) as DynPostService;
-//
-//         Router::new()
-//             .route("/posts", get(handlers::posts::get_posts))
-//             .route("/posts/:id", get(handlers::posts::get_post))
-//             // .with_state(srv)
-//             .layer(Extension(srv))
-//     }
-// }
-//
-// pub struct InitRouter;
-//
-// impl InitRouter {
-//     pub fn new_router() -> Router {
-//         Router::new()
-//             .route("/init", get(handlers::posts::init))
-//     }
-// }
+pub struct InitRouter;
+
+impl InitRouter {
+    pub fn new_router() -> Router {
+        Router::new()
+            .route("/init", get(handlers::posts::init))
+    }
+}
 
 

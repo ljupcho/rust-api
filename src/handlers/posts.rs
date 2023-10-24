@@ -40,14 +40,14 @@ pub async fn init() -> String {
     "Hello World".to_string()
 }
 
-pub async fn get_sqlx_post(
-    Path(id): Path<i32>,
-    Extension(posts_service): Extension<DynPostSqlxService>,
-) -> Result<Json<GetResponse<PublicPost>>, ApiError> {
-    let post: PublicPost = posts_service.get_post_by_id(id).await?;
-
-    Ok(Json(GetResponse{
-        data: post,
-    }))
-}
+// pub async fn get_sqlx_post(
+//     Path(id): Path<i32>,
+//     Extension(posts_service): Extension<DynPostSqlxService>,
+// ) -> Result<Json<GetResponse<PublicPost>>, ApiError> {
+//     let post: PublicPost = posts_service.get_post_by_id(id).await?;
+//
+//     Ok(Json(GetResponse{
+//         data: post,
+//     }))
+// }
 

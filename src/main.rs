@@ -3,8 +3,8 @@ use rust_api::{AppRouter, shared};
 
 #[tokio::main(flavor = "multi_thread")]
 async fn main() -> Result<()> {
-    // let db = shared::db::DB::connect().await?;
-    let db_sqlx = shared::db::DB::connect_db_sqlx().await?;
+    let db = shared::db::DB::connect().await?;
+    // let db_sqlx = shared::db::DB::connect_db_sqlx().await?;
     // let store_posts = PostStore::new(&db);
     // let srv_posts = PostService::new(&store_posts.clone());
     // let store_posts = Arc::new(Mutex::new(PostStore::new(&db)));
@@ -23,7 +23,8 @@ async fn main() -> Result<()> {
     //     database: db,
     // };
 
-    let router = AppRouter::build(db_sqlx);
+    // let router = AppRouter::build(db_sqlx);
+    let router = AppRouter::build(db);
 
     // let router = Router::new()
     //     .route("/api/postsnew/:id", get(handlers::posts::get_post_new)) 
